@@ -4,6 +4,7 @@ int edhoInputPin = 4;   // define ultrasonic signal receiver pin ECHO to D4
 int trigOutputPin = 5;  // define ultrasonic signal transmitter pin TRIG to D5
 int redLEDPin = 13;
 int greenLEDPin = 2;
+int blueLEDPin = 12;
 int irInputPin = 7;
 
 void setup() {
@@ -11,6 +12,9 @@ void setup() {
   pinMode(edhoInputPin, INPUT);
   pinMode(trigOutputPin, OUTPUT);
   pinMode(irInputPin, INPUT);
+  pinMode(redLEDPin, OUTPUT);
+  pinMode(greenLEDPin, OUTPUT);
+  pinMode(blueLEDPin, OUTPUT);
 }
 
 void loop() {
@@ -33,8 +37,14 @@ void loop() {
     digitalWrite(redLEDPin, HIGH);
     digitalWrite(greenLEDPin, LOW);
   }
-  
-  Serial.println(digitalRead(irInputPin));
+
+  // 전기차가 있으면 LED OFF
+  // 없으면 LED ON
+  if (digitalRead(irInputPin) == LOW) {
+    digitalWrite(blueLEDPin, LOW);
+  } else {
+    digitalWrite(blueLEDPin, HIGH);
+  }
 
   delay(100);
 }
